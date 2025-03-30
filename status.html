@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Status - Blood Donation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand" href="#">Blood Donation System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="status.html">Request Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donor.html">Donor Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="request.html">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="logoutBtn" class="btn btn-light btn-sm mt-1">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Your Blood Request Status</h2>
+        
+        <div id="debug-info" class="alert alert-secondary mb-3">
+            <p class="mb-0"><strong>Status:</strong> <span id="debug-status">Page loading...</span></p>
+        </div>
+        
+        <div id="noRequests" class="alert alert-info text-center d-none">
+            You haven't made any blood requests yet. <a href="request.html" class="alert-link">Make a request</a>
+        </div>
+        
+        <div id="requestsContainer"></div>
+        
+        <template id="requestTemplate">
+            <div class="card shadow mb-4 request-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="request-id m-0">Request #<span class="id-text"></span></h5>
+                    <span class="badge request-status"></span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Patient Name:</strong> <span class="patient-name"></span></p>
+                            <p><strong>Blood Group:</strong> <span class="blood-group"></span></p>
+                            <p><strong>Units Required:</strong> <span class="units"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Hospital:</strong> <span class="hospital"></span></p>
+                            <p><strong>Contact:</strong> <span class="contact"></span></p>
+                            <p><strong>Requested On:</strong> <span class="requested-date"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-tracker">
+                        <div class="progress-steps">
+                            <div class="progress-step" data-status="submitted">
+                                <div class="step-icon">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </div>
+                                <div class="step-content">
+                                    <div class="step-label">Added to Database</div>
+                                    <div class="step-details mt-2">
+                                        Your request has been successfully added to our database.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-status="verified">
+                                <div class="step-icon">
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+                                <div class="step-content">
+                                    <div class="step-label">Verified by Delivery Guy</div>
+                                    <div class="step-details mt-2">
+                                        A delivery person has verified your request details.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-status="searching">
+                                <div class="step-icon">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                                <div class="step-content">
+                                    <div class="step-label">Searching Blood Banks</div>
+                                    <div class="step-details mt-2">
+                                        We are checking blood availability in nearby blood banks.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-status="found">
+                                <div class="step-icon">
+                                    <i class="bi bi-droplet-fill"></i>
+                                </div>
+                                <div class="step-content">
+                                    <div class="step-label">Blood Bank Found</div>
+                                    <div class="step-details mt-2">
+                                        Blood matching your requirements has been located.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="progress-step" data-status="delivered">
+                                <div class="step-icon">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+                                <div class="step-content">
+                                    <div class="step-label">Ready for Delivery</div>
+                                    <div class="step-details mt-2">
+                                        Blood units are ready and will be delivered to the specified location.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="status-updates mt-4">
+                        <h6>Status Updates:</h6>
+                        <ul class="list-group status-updates-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

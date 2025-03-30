@@ -1,0 +1,490 @@
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Login Page */
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.shadow {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Status Page Styles */
+.progress-tracker {
+    margin: 30px 0;
+    padding-left: 20px;
+}
+
+.progress-steps {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    height: calc(100% - 30px);
+    width: 2px;
+    background-color: #e9ecef;
+    z-index: 0;
+}
+
+.progress-step {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    z-index: 1;
+    margin-bottom: 30px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.step-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    margin-right: 15px;
+    z-index: 2;
+}
+
+.step-icon i {
+    color: #6c757d;
+}
+
+.step-label {
+    font-size: 14px;
+    color: #6c757d;
+    padding-top: 5px;
+}
+
+/* Active Step */
+.progress-step.active .step-icon {
+    background-color: #4267B2;
+    box-shadow: 0 0 0 5px rgba(66, 103, 178, 0.2);
+}
+
+.progress-step.active .step-icon i {
+    color: white;
+}
+
+.progress-step.active .step-label {
+    color: #4267B2;
+    font-weight: bold;
+}
+
+/* Completed Step */
+.progress-step.completed .step-icon {
+    background-color: #4267B2;
+}
+
+.progress-step.completed .step-icon i {
+    color: white;
+}
+
+.progress-step.completed::after {
+    content: '';
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    height: 30px;
+    width: 2px;
+    background-color: #4267B2;
+    z-index: 1;
+}
+
+.progress-step.completed .step-label {
+    color: #4267B2;
+}
+
+/* Progress Bar - Hide the horizontal bar since we're using vertical layout */
+.progress {
+    display: none;
+}
+
+/* Step Content - Add a content section to each step */
+.step-content {
+    margin-left: 15px;
+    padding: 5px 15px;
+    border-left: 2px dashed #e9ecef;
+    flex: 1;
+}
+
+.progress-step.active .step-content {
+    border-left-color: #4267B2;
+}
+
+.progress-step.completed .step-content {
+    border-left-color: #4267B2;
+}
+
+/* Next/Previous buttons */
+.progress-nav {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.progress-nav button {
+    background-color: #4267B2;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.progress-nav button:hover {
+    background-color: #365899;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Status Badges */
+.badge.request-status {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+}
+
+.badge.submitted {
+    background-color: #6c757d;
+}
+
+.badge.verified {
+    background-color: #17a2b8;
+}
+
+.badge.searching {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge.found {
+    background-color: #28a745;
+}
+
+.badge.delivered {
+    background-color: #20c997;
+}
+
+/* Video Chat Styles */
+.video-container {
+    position: relative;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.remote-video-container, .local-video-container {
+    position: relative;
+    background-color: #343a40;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.remote-video-container {
+    height: 300px;
+}
+
+.local-video-container {
+    height: 150px;
+}
+
+#remoteVideo, #localVideo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #343a40;
+    color: #fff;
+    z-index: 1;
+}
+
+.call-controls {
+    margin-top: 15px;
+}
+
+.messages-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    max-width: 80%;
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+.message.sent {
+    align-self: flex-end;
+    background-color: #dc3545;
+    color: white;
+}
+
+.message.received {
+    align-self: flex-start;
+    background-color: #f8f9fa;
+    color: #212529;
+    border: 1px solid #dee2e6;
+}
+
+.message .sender {
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+}
+
+.message .time {
+    font-size: 0.7rem;
+    text-align: right;
+    margin-top: 2px;
+    opacity: 0.7;
+}
+
+/* Status Updates List */
+.status-updates {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.status-updates-list {
+    max-height: 300px;
+    overflow-y: auto;
+    position: relative;
+    padding-left: 15px;
+}
+
+.status-updates-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #e9ecef;
+    z-index: 0;
+}
+
+.status-updates-list .list-group-item {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    position: relative;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s forwards;
+}
+
+.status-updates-list .list-group-item::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: -20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #4267B2;
+    border: 2px solid white;
+    z-index: 1;
+}
+
+.status-updates-list .timestamp {
+    font-size: 0.8rem;
+    color: #6c757d;
+    display: block;
+    margin-top: 5px;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Admin Dashboard */
+.requests-list {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.request-item {
+    transition: all 0.2s ease;
+}
+
+.request-item:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.view-details {
+    transition: all 0.2s ease;
+}
+
+.view-details:hover {
+    transform: scale(1.05);
+}
+
+/* Animation for status change */
+@keyframes highlight {
+    0% {
+        background-color: rgba(220, 53, 69, 0.1);
+    }
+    50% {
+        background-color: rgba(220, 53, 69, 0.3);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.highlight {
+    animation: highlight 2s ease;
+}
+
+/* Progress bar animation */
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .progress-tracker {
+        padding-left: 10px;
+    }
+    
+    .progress-step {
+        margin-bottom: 20px;
+    }
+    
+    .step-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+    }
+    
+    .step-content {
+        margin-left: 10px;
+        padding: 3px 10px;
+    }
+    
+    .step-label {
+        font-size: 12px;
+    }
+    
+    .step-details {
+        font-size: 11px;
+    }
+    
+    .status-updates {
+        margin-left: 10px;
+    }
+}
+
+/* Progress Step Animations */
+.progress-step {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+/* Step details styling */
+.step-details {
+    color: #6c757d;
+    font-size: 13px;
+    padding: 5px 0;
+    display: none; /* Hidden by default, shown via JS */
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Current active step highlight effect */
+.progress-step.active {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0.1); }
+    70% { box-shadow: 0 0 0 10px rgba(66, 103, 178, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(66, 103, 178, 0); }
+}
+
+/* Active step icon animation */
+.progress-step.active .step-icon {
+    animation: bounceIn 0.6s;
+}
+
+@keyframes bounceIn {
+    0%, 20%, 40%, 60%, 80%, 100% {transform: translateY(0);}
+    30% {transform: translateY(-10px);}
+    50% {transform: translateY(-5px);}
+    70% {transform: translateY(-3px);}
+}
+
+/* Fix for step connection lines */
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    height: calc(100% - 30px);
+    width: 2px;
+    background-color: #e9ecef;
+    z-index: 0;
+}
+
+.progress-step:last-child {
+    margin-bottom: 0;
+}
+
+.progress-step.completed:last-child::after {
+    display: none;
+}
+
+/* Add color to the status text */
+.status-text strong {
+    color: #4267B2;
+}

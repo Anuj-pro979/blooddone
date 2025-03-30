@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Blood Donation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Blood Donation System - Admin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="status.html">Request Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="donor.html">Donor Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="request.html">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="logoutBtn" class="btn btn-light btn-sm mt-1">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="m-0">Dashboard</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#all-requests" data-bs-toggle="tab">All Requests</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#pending" data-bs-toggle="tab">Pending Verification</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#searching" data-bs-toggle="tab">Searching Blood Banks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#found" data-bs-toggle="tab">Blood Bank Found</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#delivered" data-bs-toggle="tab">Ready for Delivery</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card shadow mb-4">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="m-0">Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Total Requests:</span>
+                            <span id="total-requests" class="fw-bold">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Added to Database:</span>
+                            <span id="pending-count" class="fw-bold">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Searching Blood Banks:</span>
+                            <span id="searching-count" class="fw-bold">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Blood Bank Found:</span>
+                            <span id="found-count" class="fw-bold">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Ready for Delivery:</span>
+                            <span id="delivered-count" class="fw-bold">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="card shadow">
+                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                        <h5 class="m-0">Blood Donation Requests</h5>
+                        <div class="d-flex">
+                            <input type="text" id="searchInput" class="form-control form-control-sm me-2" placeholder="Search requests...">
+                            <select id="bloodGroupFilter" class="form-select form-select-sm me-2" style="width: 100px;">
+                                <option value="">All</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                            <select id="urgencyFilter" class="form-select form-select-sm" style="width: 120px;">
+                                <option value="">All Urgency</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="all-requests">
+                                <div id="all-requests-container" class="requests-list"></div>
+                            </div>
+                            <div class="tab-pane fade" id="pending">
+                                <div id="pending-container" class="requests-list"></div>
+                            </div>
+                            <div class="tab-pane fade" id="searching">
+                                <div id="searching-container" class="requests-list"></div>
+                            </div>
+                            <div class="tab-pane fade" id="found">
+                                <div id="found-container" class="requests-list"></div>
+                            </div>
+                            <div class="tab-pane fade" id="delivered">
+                                <div id="delivered-container" class="requests-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Detail Modal -->
+    <div class="modal fade" id="requestDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Request Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Request Information</h6>
+                            <p><strong>Request ID:</strong> <span id="modal-request-id"></span></p>
+                            <p><strong>Patient Name:</strong> <span id="modal-patient-name"></span></p>
+                            <p><strong>Blood Group:</strong> <span id="modal-blood-group"></span></p>
+                            <p><strong>Units Required:</strong> <span id="modal-units"></span></p>
+                            <p><strong>Hospital:</strong> <span id="modal-hospital"></span></p>
+                            <p><strong>Address:</strong> <span id="modal-address"></span></p>
+                            <p><strong>Contact:</strong> <span id="modal-contact"></span></p>
+                            <p><strong>Urgency:</strong> <span id="modal-urgency"></span></p>
+                            <p><strong>Additional Info:</strong> <span id="modal-additional-info"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Update Status</h6>
+                            <form id="statusUpdateForm">
+                                <div class="mb-3">
+                                    <label for="statusUpdate" class="form-label">New Status</label>
+                                    <select class="form-select" id="statusUpdate" required>
+                                        <option value="">Select Status</option>
+                                        <option value="submitted">Added to Database</option>
+                                        <option value="verified">Verified by Delivery Guy</option>
+                                        <option value="searching">Searching Blood Banks</option>
+                                        <option value="found">Blood Bank Found</option>
+                                        <option value="delivered">Ready for Delivery</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="statusComment" class="form-label">Status Comment</label>
+                                    <textarea class="form-control" id="statusComment" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-danger">Update Status</button>
+                            </form>
+                            
+                            <hr>
+                            
+                            <h6>Status History</h6>
+                            <ul class="list-group" id="modal-status-history">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Item Template -->
+    <template id="requestItemTemplate">
+        <div class="card mb-3 request-item">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="request-id mb-1">Request #<span class="id-text"></span></h5>
+                        <p class="mb-1"><strong>Patient:</strong> <span class="patient-name"></span></p>
+                        <p class="mb-1"><strong>Blood Group:</strong> <span class="blood-group"></span></p>
+                        <p class="mb-1"><strong>Units:</strong> <span class="units"></span></p>
+                        <p class="mb-0"><strong>Requested:</strong> <span class="requested-date"></span></p>
+                    </div>
+                    <div class="text-end">
+                        <span class="badge request-status mb-2"></span>
+                        <p class="mb-1"><strong>Hospital:</strong> <span class="hospital"></span></p>
+                        <p class="mb-1"><strong>Contact:</strong> <span class="contact"></span></p>
+                        <button class="btn btn-sm btn-primary view-details">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
